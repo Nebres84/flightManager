@@ -1,0 +1,109 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://thymeleaf.org">
+<head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <title>Flight Manager</title>
+</head>
+<body>
+<div class="jumbotron jumbotron-fluid">
+    <div class="container">
+        <h1 class="display-4">Flight Manager</h1>
+        <p class="lead">This is simple Flight Manager Application.</p>
+    </div>
+</div>
+<div class="card">
+    <div class="alert alert-warning" role="alert" th:if = ${noResult}>
+        No results found for requested params!
+    </div>
+    <div class="card-header">
+            AIRPORT INFORMATION SEARCHING
+    </div>
+    <div class="card-body">
+        <h5 class="card-title">Search for Airport details</h5>
+        <p class="card-text">Fill date (UTC time), airport code and departures/arrivals criteria, to receive information about flights and total number of baggage pieces.</p>
+        <form action="#" th:action="@{/index}" th:object="${request}" class="form-inline" id="airportSearch" method="post">
+            <div class="form-group mb-4">
+                <label for="ArrivalDate" class="sr-only">Requested Date</label>
+                <input type="date" id="ArrivalDate" value="ArrivalDate" th:field="*{requestedDate}" required>
+            </div>
+            <div class="form-group mx-sm-3 mb-4">
+                <label for="airportCode" class="sr-only">airport Code</label>
+                <input type="text" class="form-control" id="airportCode" th:field="*{airportCode}" placeholder="Airport Code" required>
+            </div>
+            <div class="form-check mx-sm-4">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <label class="input-group-text" for="inputGroupSelect01">Options</label>
+                    </div>
+                    <select class="custom-select" id="inputGroupSelect01" th:field="*{arrivalRequest}">
+                        <option value="1" th:value="1">Arriving Planes</option>
+                        <option value="0" th:value="0">Departing Planes</option>
+                    </select>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-primary mb-2">Search</button>
+        </form>
+        <div class="card" style="width: 18rem;" th:if = ${airportResults}>
+            <div class="card-body">
+                <h5 class="card-title" th:text="'Number Of Flights: ' + ${airportDTO.numberOfFlights}"></h5>
+                <h5 class="card-title" th:text="'Sum of all baggage pieces: ' + ${airportDTO.sumOfAllBaggagePieces}"></h5>
+            </div>
+        </div>
+    </div>
+    <div class="card">
+        <div class="card-header">
+            FLIGHTS INFORMATION SEARCHING
+        </div>
+        <div class="card-body">
+            <h5 class="card-title">Search for Flight details </h5>
+            <p class="card-text">Fill departure date (UTC time) and flight number to find a requested flight</p>
+            <form action="#" th:action="@{/index}" th:object="${request}" class="form-inline" id="flightSearch" method="post">
+                <div class="form-group mb-2">
+                    <label for="departureDate" class="sr-only">Flight Date (UTC TIME)</label>
+                    <input type="date" th:field="*{requestedDate}" id="departureDate" value="Departure Date" required>
+                </div>
+                <div class="form-group mx-sm-3 mb-2">
+                    <label for="flightNumber" class="sr-only">Flight Number</label>
+                    <input type="number" th:field="*{flightNumber}" class="form-control" id="flightNumber" placeholder="Flight Number" required>
+                </div>
+                <button type="submit" class="btn btn-primary mb-2">Search</button>
+             </form>
+        </div>
+    </div>
+    <table class="table table-striped" th:if = ${flightResults}>
+        <thead>
+        <tr>
+            <th scope="col">Flight ID</th>
+            <th scope="col">Flight Number</th>
+            <th scope="col">Cargo Weight(KG)</th>
+            <th scope="col">Cargo Weight(LB)</th>
+            <th scope="col">Baggage Weight(KG)</th>
+            <th scope="col">Baggage Weight(LB)</th>
+            <th scope="col">Total Weight(KG)</th>
+            <th scope="col">Total Weight(LB)</th>
+        </tr>
+        </thead>
+        <tbody>
+        <tr th:each="flightDTO : ${flightsDTOs}" >
+            <td th:text="${flightDTO.flightId}"></td>
+            <td th:text="${flightDTO.flightNumber}"></td>
+            <td th:text="${flightDTO.cargoWeight.getLeft()}"></td>
+            <td th:text="${flightDTO.cargoWeight.getRight()}"></td>
+            <td th:text="${flightDTO.baggageWeight.getLeft()}"></td>
+            <td th:text="${flightDTO.baggageWeight.getRight()}"></td>
+            <td th:text="${flightDTO.totalWeight.getLeft()}"></td>
+            <td th:text="${flightDTO.totalWeight.getRight()}"></td>
+        </tr>
+        </tbody>
+    </table>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+</body>
+</html>

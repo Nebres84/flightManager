@@ -1,0 +1,37 @@
+[
+  {
+    "flightId": 0,
+    "flightNumber": 9581,
+    "departureAirportIATACode": "YYZ",
+    "arrivalAirportIATACode": "PPX",
+    "departureDate": "2015-07-14T09:22:35 -02:00"
+  },
+  {
+    "flightId": 1,
+    "flightNumber": 6768,
+    "departureAirportIATACode": "SEA",
+    "arrivalAirportIATACode": "LEW",
+    "departureDate": "2016-08-28T06:52:12 -02:00"
+  },
+  {
+    "flightId": 2,
+    "flightNumber": 7059,
+    "departureAirportIATACode": "ANC",
+    "arrivalAirportIATACode": "PPX",
+    "departureDate": "2016-04-12T07:49:33 -02:00"
+  },
+  {
+    "flightId": 3,
+    "flightNumber": 5548,
+    "departureAirportIATACode": "SEA",
+    "arrivalAirportIATACode": "KRK",
+    "departureDate": "2018-04-04T07:36:01 -02:00"
+  },
+  {
+    "flightId": 4,
+    "flightNumber": 6875,
+    "departureAirportIATACode": "LAX",
+    "arrivalAirportIATACode": "LEW",
+    "departureDate": "2019-04-04T01:47:20 -02:00"
+  }
+]
